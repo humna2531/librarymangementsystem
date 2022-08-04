@@ -1,0 +1,171 @@
+--///////////// TABLE CREATION /////////////--
+--==========================================--
+--AUTHOR
+/*CREATE TABLE Authors(
+	AId NUMBER(4) constraint Authors_AId_pk primary key,
+	AName varchar(15) NOT NULL,
+	AGender char(1) constraint Author_AGender_CK check (AGender in ('M', 'F')),
+	AQualification varchar(50)
+);
+DESC Authors;*/
+
+--PUBLISHER
+/*CREATE TABLE Publishers(	
+   PId NUMBER(4) constraint Publishers_PId_pk primary key,
+	 PName VARCHAR2(15) NOT NULL, 
+	 City VARCHAR2(16), 
+	 ZIP char(5) constraint Publishers_ZIP_CK CHECK ( ZIP LIKE '24242')
+);
+DESC Publishers;*/
+
+--LIBRARIAN
+/*CREATE TABLE Librarian(
+LibId NUMBER(4) constraint Librarian_LibId_pk primary key,
+LibName varchar2(15) NOT NULL
+);
+DESC Librarian;*/
+
+/*STUDENT*
+CREATE TABLE Students(
+StudsId NUMBER(4) constraint Students_StudsId_pk primary key,
+StudsName varchar2(15) NOT NULL
+);
+DESC Students;
+
+/*--BOOKS
+
+CREATE TABLE Books(
+  BId NUMBER(4) constraint Books_BId_pk primary key,
+	BName varchar(20),
+	ISBN NUMBER(5) NOT NULL,
+  constraint Books_ISBN_CK1 CHECK (ISBN LIKE '13579'),
+	AId NUMBER(4),
+  constraint Books_AId_FK foreign key(AId) REFERENCES Authors(AId) ON DELETE SET NULL, 
+	PId NUMBER(4),
+  constraint Books_PId_FK foreign key(PId) REFERENCES Publishers(PId) ON DELETE SET NULL,
+  LibId NUMBER(4),
+  constraint Books_LibId_FK foreign key(LibId) REFERENCES Librarian(LibId) ON DELETE SET NULL,
+  StudsId NUMBER(4),
+  constraint Books_StudsId_FK foreign key(StudsId) REFERENCES Students(StudsId) ON DELETE SET NULL
+);
+DESC Books;
+
+--ISSUE
+DROP TABLE Issue;
+CREATE TABLE Issue(
+  BId NUMBER(4),
+  constraint Issue_BId_FK foreign key(BId) REFERENCES Books(BId) ON DELETE SET NULL,
+  StudsId NUMBER(4),
+  constraint Issue_StudsId_FK foreign key(StudsId) REFERENCES Students(StudsId) ON DELETE SET NULL,
+	Issue_Date DATE,
+	Return_Date DATE
+);
+DESC Issue;*/
+
+
+--//////////// TABLE VALUES INSERSTION ////////////--
+--=================================================--
+--AUTHOR--
+/*INSERT INTO Authors
+VALUES(1234, 'ROBERTS', 'M', 'MASTERS');
+
+INSERT INTO Authors
+VALUES(1235, 'MELINA', 'F', 'DOCTRATE');
+
+INSERT INTO Authors
+VALUES(1236, 'THOMAS', 'M', 'PHD');
+
+SELECT * from Authors;
+
+--PUBLISHERS--
+INSERT INTO Publishers
+VALUES(1246, 'PARAMOUNT', 'New-York', '24242');
+
+INSERT INTO Publishers
+VALUES(1247, 'GABA', 'Karachi', '24242');
+
+INSERT INTO Publishers
+VALUES(1248, 'OXFORD', 'London', '24242');
+
+SELECT * from Publishers;
+
+--LIBRARIAN--
+INSERT INTO librarian
+VALUES(9876, 'JAMES');
+
+INSERT INTO librarian
+VALUES(9877, 'JULIE');
+
+SELECT * from librarian;
+
+--STUDENT--
+INSERT INTO Students
+VALUES(1941, 'MUIZ');
+
+INSERT INTO Students
+VALUES(1942, 'SADIQ');
+
+INSERT INTO Students
+VALUES(1940, 'ANAS');
+
+SELECT * from Students;
+
+--BOOKS--
+INSERT INTO Books
+VALUES(1010, 'COM-SYS', 13579, 1234, 1246, 9876, 1941);
+
+INSERT INTO Books
+VALUES(1011, 'DBMS', 13579, 1235, 1247, 9876, 1942);
+
+SELECT * from Books;
+
+--ISSUE--
+INSERT INTO Issue
+VALUES(1010, 1941,'05-JAN-22', '08-FEB-22');
+
+INSERT INTO Issue
+VALUES(1011, 1942, '24-JAN-22', '05-FEB-22');
+
+SELECT * from Issue;*/
+
+--//////////// TRIGGERS CREATION ////////////--
+--===========================================--
+/*--INSERT TRIGGER
+INSERT INTO Books
+VALUES(1012, 'OS', 13579, 1236, 1248, 9877, 1940 );
+
+CREATE OR REPLACE TRIGGER studentsID
+    BEFORE
+    INSERT
+    ON Books   
+BEGIN
+  Raise_application_error(-20200,'SYSTEM.STUDENTS CANT ADD BOOKS');
+END studentsID;
+
+--UPDATE TRIGGER
+UPDATE Books
+SET BId=1012
+WHERE AId=1235;
+
+SELECT * FROM BOOKS;
+
+DROP TRIGGER studentID_S;
+CREATE OR REPLACE TRIGGER studentID_S
+    BEFORE
+    UPDATE
+    ON Books    
+BEGIN
+  Raise_application_error(-20200,'BOOKS CANNOT BE UPDATED BY STUDENTS');
+END studentID_S;
+
+--DELETE TRIGGER
+DELETE Books
+WHERE AId=1235;
+
+CREATE OR REPLACE TRIGGER studentID_D
+    BEFORE
+    DELETE
+    ON Books    
+BEGIN
+  Raise_application_error(-20200,'BOOKS CANNOT BE DELETED BY STUDENTS');
+END studentID_D;*/
